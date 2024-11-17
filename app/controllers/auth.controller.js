@@ -64,7 +64,7 @@ const authController = {
       firstname,
       birthdate,
       password: hashedPassword,
-      arrival_date: arrival_date || new date(),
+      arrival_date: arrival_date || new Date(),
       leaving_date: leaving_date || null,
       role,
       is_active: true,
@@ -74,10 +74,7 @@ const authController = {
   },
 
   login: async (req, res) => {
-    console.log("Execution du login");
     const { email, password } = req.body;
-    console.log("email : ", email);
-    console.log("password : ", password);
 
     validate(authSchemas.loginData, req.body);
 

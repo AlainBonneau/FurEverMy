@@ -4,14 +4,14 @@ import { Animal, Task, User } from "../models/associations.js";
 
 console.log("Création des données...");
 
-const password = "Az123456";
+const password = "#MonSuperMdp!";
 const nbOfSaltRounds = parseInt(process.env.NB_OF_SALT_ROUNDS) || 10;
 const hashedPassword = await bcrypt.hash(password, nbOfSaltRounds);
 
 // Création des animaux
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "users/lula.jpg",
   name: "Lula",
   birthdate: new Date("2020-06-08"),
   gender: "Female",
@@ -72,11 +72,11 @@ await Task.create({
 // Création des Users
 
 await User.create({
-  avatar: "users/lucas.png",
-  email: "lucasbertrand.oc@gmail.com",
-  lastname: "BERTRAND",
-  firstname: "Lucas",
-  birthdate: new Date("1999-02-08"),
+  avatar: "users/alain.jpg",
+  email: "alain.bonneau@oclock.school",
+  lastname: "BONNEAU",
+  firstname: "Alain",
+  birthdate: new Date("1997-11-28"),
   password: hashedPassword,
   role: "Admin",
   leaving_date: null,
