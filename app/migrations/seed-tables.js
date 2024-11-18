@@ -43,6 +43,127 @@ await Animal.create({
   is_active: true,
 });
 
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Lulu",
+  birthdate: new Date("2017-11-12"),
+  gender: "Female",
+  health: "Good",
+  leaving_date: null,
+  about: "Elle cool",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Felix",
+  birthdate: new Date("2018-03-12"),
+  gender: "Male",
+  health: "Good",
+  leaving_date: null,
+  about: "Il est cool",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Pablo",
+  birthdate: new Date("2021-11-08"),
+  gender: "Male",
+  health: "Bad",
+  leaving_date: null,
+  about: "Il est malade",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Nina",
+  birthdate: new Date("2014-04-21"),
+  gender: "Female",
+  health: "Bad",
+  leaving_date: null,
+  about: "Elle est malade",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Aria",
+  birthdate: new Date("2023-10-12"),
+  gender: "Female",
+  health: "Good",
+  leaving_date: null,
+  about: "Elle est en bonne santé",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Oscar",
+  birthdate: new Date("2022-01-12"),
+  gender: "Male",
+  health: "Good",
+  leaving_date: null,
+  about: "Il est en bonne santé",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Sacha",
+  birthdate: new Date("2019-10-10"),
+  gender: "Male",
+  health: "Good",
+  leaving_date: null,
+  about: "Il est un peu fou",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Romy",
+  birthdate: new Date("2012-03-08"),
+  gender: "Male",
+  health: "Bad",
+  leaving_date: null,
+  about: "Il est un peu malade",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Django",
+  birthdate: new Date("2014-01-11"),
+  gender: "Male",
+  health: "Good",
+  leaving_date: new Date("2024-07-09"),
+  about: "Il est parti",
+  is_active: false,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Violette",
+  birthdate: new Date("2017-08-12"),
+  gender: "Female",
+  health: "Good",
+  leaving_date: null,
+  about: "Elle est cool",
+  is_active: true,
+});
+
+await Animal.create({
+  avatar: "users/lucas.png",
+  name: "Coco",
+  birthdate: new Date("2018-04-09"),
+  gender: "Male",
+  health: "Bad",
+  leaving_date: null,
+  about: "Il est malade",
+  is_active: true,
+});
+
 // Créartion des tasks
 
 await Task.create({
