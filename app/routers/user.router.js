@@ -18,7 +18,7 @@ router.get(
   isLoggedIn,
   cw(userController.getById)
 );
-router.post(
+router.put(
   "/users/patch",
   jwtMiddleware,
   isLoggedIn,

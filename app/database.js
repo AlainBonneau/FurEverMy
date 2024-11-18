@@ -9,10 +9,11 @@ const database = process.env.DATABASE_URL;
 export const sequelize = new Sequelize(database, {
   dialect: "postgres",
   dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
+    // Remettre le ssl à true si vous êtes en production
+    // ssl: {
+    //   require: true,
+    //   rejectUnauthorized: false,
+    // },
   },
   pool: {
     max: 10, // maximum de connexions dans le pool

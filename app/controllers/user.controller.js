@@ -24,74 +24,52 @@ const userController = {
       return res.status(404).json({ error: "Utilisateur inconnu" });
     }
 
-    const userTokenJWT = createToken({...user.dataValues});
+    const userTokenJWT = createToken({ ...user.dataValues });
 
     res.json(userTokenJWT);
   },
 
   update: async (req, res) => {
-    const userId = parseInt(req.params.id);
+    const userId = req.userId; // ID extrait du token JWT
+    console.log("ID utilisateur reçu du JWT :", userId);
+    console.log("Données reçues :", req.body);
 
     if (!userId) {
-      return res.status(404).json({ error: "ID invalide" });
+      return res.status(400).json({ error: "ID utilisateur invalide." });
     }
 
     const user = await User.findByPk(userId);
-
     if (!user) {
-      return res.status(404).json({ error: "Utilisateur non trouvé" });
+      return res.status(404).json({ error: "Utilisateur introuvable." });
     }
 
-    const {
-      avatar,
-      email,
-      lastname,
-      firstname,
-      birthdate,
-      password,
-      arrival_date,
-      leaving_date,
-      role,
-      is_active,
-    } = req.body;
-
-    validate(userSchemas.updateData, req.body);
-
-    if (
-      !email ||
-      !lastname ||
-      !firstname ||
-      !birthdate ||
-      !password ||
-      !role ||
-      !is_active
-    ) {
-      return res
-        .status(400)
-        .json({ error: "Tous les champs sont obligatoire" });
-    }
-
-    const updatedUser = {
-      avatar,
-      email,
-      lastname,
-      firstname,
-      birthdate,
-      password,
-      arrival_date: arrival_date || undefined,
-      leaving_date: leaving_date || undefined,
-      role,
-      is_active,
-    };
+    const updatedUser = {};
+    [
+      "avatar",
+      "email",
+      "lastname",
+      "firstname",
+      "birthdate",
+      "password",
+      "arrival_date",
+      "leaving_date",
+      "role",
+      "is_active",
+    ].forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updatedUser[field] = req.body[field];
+      }
+    });
 
     try {
       await user.update(updatedUser);
+      console.log("Utilisateur mis à jour avec succès :", user);
       res.json(user);
     } catch (error) {
-      console.error(error);
+      console.error("Erreur lors de la mise à jour :", error);
       res
         .status(500)
-        .json({ error: "Erreur lors de la mise à jour de l'utilisateur" });
+        .json({ error: "Erreur lors de la mise à jour de l'utilisateur." });
     }
   },
 
