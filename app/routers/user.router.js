@@ -6,18 +6,8 @@ import { isAdmin, isLoggedIn } from "../middlewares/login.middleware.js";
 
 export const router = Router();
 
-router.get(
-    "/users", 
-    jwtMiddleware, 
-    isAdmin, 
-    cw(userController.getAllUsers)
-);
-router.get(
-  "/user",
-  jwtMiddleware,
-  isLoggedIn,
-  cw(userController.getById)
-);
+router.get("/users", jwtMiddleware, isAdmin, cw(userController.getAllUsers));
+router.get("/user", jwtMiddleware, isLoggedIn, cw(userController.getById));
 router.put(
   "/users/patch",
   jwtMiddleware,

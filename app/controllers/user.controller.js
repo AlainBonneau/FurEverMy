@@ -1,4 +1,5 @@
 import { User } from "../models/user.model.js";
+import { Task } from "../models/task.model.js";
 import { createToken } from "../utils/token.util.js";
 import userSchemas from "../validators/user.schemas.js";
 import validate from "../validators/validator.js";
@@ -6,6 +7,7 @@ import validate from "../validators/validator.js";
 const userController = {
   getAllUsers: async (req, res) => {
     const userList = await User.findAll();
+    console.log(User.associations);
     res.json(userList);
   },
 
@@ -71,6 +73,13 @@ const userController = {
         .status(500)
         .json({ error: "Erreur lors de la mise à jour de l'utilisateur." });
     }
+  },
+
+  getUserWithTask: async (req, res) => {
+    const userTask = await User.findAll({
+      include: { model: Task, as: "task" },
+    });
+    res.json(userTask);
   },
 
   softDelete: async (req, res) => {

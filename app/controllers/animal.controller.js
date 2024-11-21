@@ -64,8 +64,8 @@ const animalController = {
   update: async (req, res) => {
     const animalId = parseInt(req.params.id);
 
-    if (!animalId) {
-      return res.status(404).json({ error: "id inconnu" });
+    if (isNaN(animalId)) {
+      return res.status(400).json({ error: "ID invalide" });
     }
 
     const {
@@ -74,31 +74,48 @@ const animalController = {
       birthdate,
       gender,
       health,
-      arrival_date,
       leaving_date,
       about,
       is_active,
     } = req.body;
 
-    const animal = await Animal.findByPk(animalId);
+    try {
+      const animal = await Animal.findByPk(animalId);
 
-    if (!animal) {
-      return res.status(404).json({ error: "Animal inconnu" });
+      if (!animal) {
+        return res.status(404).json({ error: "Animal inconnu" });
+      }
+
+      // Validation des champs
+      const validateDate = (date) => {
+        if (!date) return null;
+        const parsedDate = new Date(date);
+        return isNaN(parsedDate.getTime())
+          ? null
+          : parsedDate.toISOString().split("T")[0];
+      };
+
+      const updateFields = {
+        avatar: avatar || animal.avatar,
+        name: name || animal.name,
+        birthdate: validateDate(birthdate) || animal.birthdate,
+        gender: gender || animal.gender,
+        health: health || animal.health,
+        leaving_date: validateDate(leaving_date) || animal.leaving_date,
+        about: about || animal.about,
+        is_active: is_active !== undefined ? is_active : animal.is_active,
+      };
+
+      // Mise à jour
+      const updatedAnimal = await animal.update(updateFields);
+
+      res.json(updatedAnimal);
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la mise à jour de l'animal" });
     }
-
-    const updateAnimal = await animal.update({
-      avatar,
-      name,
-      birthdate,
-      gender,
-      health,
-      arrival_date: arrival_date,
-      leaving_date: leaving_date || null,
-      about: about || null,
-      is_active,
-    });
-
-    res.json(updateAnimal);
   },
 };
 
