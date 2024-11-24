@@ -11,7 +11,7 @@ const hashedPassword = await bcrypt.hash(password, nbOfSaltRounds);
 // Création des animaux
 
 await Animal.create({
-  avatar: "users/lula.jpg",
+  avatar: "animals/lula.jpg",
   name: "Lula",
   birthdate: new Date("2020-06-08"),
   gender: "Female",
@@ -22,7 +22,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/leo.jpg",
   name: "Leo",
   birthdate: new Date("2021-11-17"),
   gender: "Male",
@@ -33,7 +33,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/mira.jpg",
   name: "Mira",
   birthdate: new Date("2015-01-12"),
   gender: "Female",
@@ -44,7 +44,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/lulu.jpg",
   name: "Lulu",
   birthdate: new Date("2017-11-12"),
   gender: "Female",
@@ -55,7 +55,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/felix.jpg",
   name: "Felix",
   birthdate: new Date("2018-03-12"),
   gender: "Male",
@@ -66,7 +66,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/pablo.jpg",
   name: "Pablo",
   birthdate: new Date("2021-11-08"),
   gender: "Male",
@@ -77,7 +77,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/nina.jpg",
   name: "Nina",
   birthdate: new Date("2014-04-21"),
   gender: "Female",
@@ -88,18 +88,18 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/aria.jpg",
   name: "Aria",
   birthdate: new Date("2023-10-12"),
   gender: "Female",
   health: "Good",
   leaving_date: null,
-  about: "Elle est en bonne santé",
+  about: "Elle est méchante",
   is_active: true,
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/oscar.jpg",
   name: "Oscar",
   birthdate: new Date("2022-01-12"),
   gender: "Male",
@@ -110,7 +110,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/sacha.jpg",
   name: "Sacha",
   birthdate: new Date("2019-10-10"),
   gender: "Male",
@@ -121,7 +121,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/romy.jpg",
   name: "Romy",
   birthdate: new Date("2012-03-08"),
   gender: "Male",
@@ -132,7 +132,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/django.jpg",
   name: "Django",
   birthdate: new Date("2014-01-11"),
   gender: "Male",
@@ -143,7 +143,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/violette.jpg",
   name: "Violette",
   birthdate: new Date("2017-08-12"),
   gender: "Female",
@@ -154,7 +154,7 @@ await Animal.create({
 });
 
 await Animal.create({
-  avatar: "users/lucas.png",
+  avatar: "animals/coco.jpg",
   name: "Coco",
   birthdate: new Date("2018-04-09"),
   gender: "Male",
