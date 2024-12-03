@@ -20,3 +20,4 @@ router.post(
   isAdmin,
   cw(userController.softDelete)
 );
+router.post("/user/add", jwtMiddleware, isAdmin, cw(userController.addNewUser));

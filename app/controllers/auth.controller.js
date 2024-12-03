@@ -21,6 +21,7 @@ const authController = {
       role,
     } = req.body;
 
+    // Vérifie si les données envoyées par le client respectent les règles de validation définies dans notre authSchemas.registerData.
     validate(authSchemas.registerData, req.body);
 
     if (
@@ -43,6 +44,7 @@ const authController = {
         .json("Le mot de passe et sa confirmation ne correspondent pas.");
     }
 
+    // Vérifie si le format de l'email est valide grace à la librairie email-validator au lieu de le faire manuellement avec des regex.
     if (!emailValidator.validate(email)) {
       console.log("Le format de l'email n'est pas valide.");
       return res.status(400).json("Le format de l'email n'est pas valide.");

@@ -109,6 +109,37 @@ const userController = {
         .json({ error: "Erreur lors de la desactivation de l'utilisateur" });
     }
   },
+
+  addNewUser: async (req, res) => {
+    const { avatar, email, lastname, firstname, birthdate, password, role } =
+      req.body;
+
+    validate(userSchemas.createUser, req.body);
+
+    const user = await User.findOne({ where: { email } });
+
+    if (user) {
+      return res.status(400).json("Cet email est déjà utilisé.");
+    }
+
+    try {
+      await User.create({
+        avatar,
+        email,
+        lastname,
+        firstname,
+        birthdate,
+        password,
+        role,
+        is_active: true,
+      });
+
+      res.status(200).json("Utilisateur créé avec succès.");
+    } catch (error) {
+      console.error(error);
+      res.status(500).json("Erreur lors de la création de l'utilisateur.");
+    }
+  },
 };
 
 export default userController;
