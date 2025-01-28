@@ -17,15 +17,15 @@ Task.belongsToMany(Animal, {
   foreignKey: "task_id",
 });
 
-Species.hasMany(Animal, {
-  as: "animals",
-  foreignKey: "species_id",
-});
+// Species.hasMany(Animal, {
+//   as: "animals",
+//   foreignKey: "species_id",
+// });
 
-Animal.belongsTo(Species, {
-  as: "species",
-  foreignKey: "species_id",
-});
+// Animal.belongsTo(Species, {
+//   as: "species",
+//   foreignKey: "species_id",
+// });
 
 User.belongsToMany(Task, {
   as: "task",
