@@ -4,7 +4,7 @@ import { Animal, Task, User } from "../models/associations.js";
 
 console.log("Création des données...");
 
-const password = process.env.PASSWORD;
+const password = "#MonSuperMdp!";
 const nbOfSaltRounds = parseInt(process.env.NB_OF_SALT_ROUNDS) || 10;
 const hashedPassword = await bcrypt.hash(password, nbOfSaltRounds);
 
