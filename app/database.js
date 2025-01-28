@@ -7,6 +7,7 @@ import errorHandler from "./middlewares/errorHandler.middleware.js";
 const database = process.env.DATABASE_URL;
 
 export const sequelize = new Sequelize(database, {
+  // Attention, si tu mets le site en ligne, tu dois activer le certificat SSL en décommentant le code ci-dessous.
   dialect: "postgres",
   dialectOptions: {
     ssl: {
@@ -15,10 +16,10 @@ export const sequelize = new Sequelize(database, {
     },
   },
   pool: {
-    max: 10, // maximum de connexions dans le pool
-    min: 0, // minimum de connexions dans le pool
-    acquire: 30000, // temps d'attente maximum avant qu'une erreur ne soit renvoyée si une connexion ne peut pas être établie
-    idle: 10000, // temps avant qu'une connexion inutilisée ne soit libérée
+    max: 10,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
   },
 });
 
