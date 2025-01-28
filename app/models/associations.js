@@ -17,6 +17,7 @@ Task.belongsToMany(Animal, {
   foreignKey: "task_id",
 });
 
+// Cette relation fait tout planter 
 // Species.hasMany(Animal, {
 //   as: "animals",
 //   foreignKey: "species_id",

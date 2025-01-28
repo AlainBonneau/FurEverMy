@@ -1,1 +1,1 @@
-# project-fur-ever-home-back-v2
+# Back-end du projet FurEverHome
