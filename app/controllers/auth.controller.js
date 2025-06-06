@@ -18,10 +18,9 @@ const authController = {
       confirmPassword,
       arrival_date,
       leaving_date,
-      role,
     } = req.body;
 
-    // Vérifie si les données envoyées par le client respectent les règles de validation définies dans notre authSchemas.registerData.
+    // Validation
     validate(authSchemas.registerData, req.body);
 
     if (
@@ -30,29 +29,27 @@ const authController = {
       !firstname ||
       !birthdate ||
       !password ||
-      !confirmPassword ||
-      !role
+      !confirmPassword
     ) {
-      console.log("Tous les champs sont obligatoires.");
       return res.status(400).json("Tous les champs sont obligatoires.");
     }
 
     if (password !== confirmPassword) {
-      console.log("Le mot de passe et sa confirmation ne correspondent pas.");
       return res
         .status(400)
         .json("Le mot de passe et sa confirmation ne correspondent pas.");
     }
 
-    // Vérifie si le format de l'email est valide grace à la librairie email-validator au lieu de le faire manuellement avec des regex.
     if (!emailValidator.validate(email)) {
-      console.log("Le format de l'email n'est pas valide.");
       return res.status(400).json("Le format de l'email n'est pas valide.");
+    }
+
+    if (req.body.role && req.body.role.toLowerCase() !== "user") {
+      return res.status(403).json("Création avec rôle interdit.");
     }
 
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-      console.log("Cet email est déjà utilisé.");
       return res.status(400).json("Cet email est déjà utilisé.");
     }
 
@@ -68,11 +65,11 @@ const authController = {
       password: hashedPassword,
       arrival_date: arrival_date || new Date(),
       leaving_date: leaving_date || null,
-      role,
+      role: "user",
       is_active: true,
     });
 
-    res.status(200).json("succesfully create user");
+    res.status(200).json("Utilisateur créé avec succès");
   },
 
   login: async (req, res) => {

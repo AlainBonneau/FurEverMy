@@ -18,15 +18,15 @@ Task.belongsToMany(Animal, {
 });
 
 // Cette relation fait tout planter 
-// Species.hasMany(Animal, {
-//   as: "animals",
-//   foreignKey: "species_id",
-// });
+Species.hasMany(Animal, {
+  as: "animals",
+  foreignKey: "species_id",
+});
 
-// Animal.belongsTo(Species, {
-//   as: "species",
-//   foreignKey: "species_id",
-// });
+Animal.belongsTo(Species, {
+  as: "species",
+  foreignKey: "species_id",
+});
 
 User.belongsToMany(Task, {
   as: "task",

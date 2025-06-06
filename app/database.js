@@ -9,12 +9,12 @@ const database = process.env.DATABASE_URL;
 export const sequelize = new Sequelize(database, {
   // Attention, si tu mets le site en ligne, tu dois activer le certificat SSL en décommentant le code ci-dessous.
   dialect: "postgres",
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false,
-    },
-  },
+  // dialectOptions: {
+  //   ssl: {
+  //     require: true,
+  //     rejectUnauthorized: false,
+  //   },
+  // },
   pool: {
     max: 10,
     min: 0,
