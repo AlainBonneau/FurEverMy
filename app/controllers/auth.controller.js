@@ -8,6 +8,8 @@ import { createToken, createRefreshToken } from "../utils/token.util.js";
 
 const authController = {
   register: async (req, res) => {
+    const validatedBody = validate(authSchemas.registerData, req.body);
+
     const {
       avatar,
       email,
@@ -18,10 +20,7 @@ const authController = {
       confirmPassword,
       arrival_date,
       leaving_date,
-    } = req.body;
-
-    // Validation
-    validate(authSchemas.registerData, req.body);
+    } = validatedBody;
 
     if (
       !email ||
@@ -73,9 +72,8 @@ const authController = {
   },
 
   login: async (req, res) => {
-    const { email, password } = req.body;
-
-    validate(authSchemas.loginData, req.body);
+    const validatedBody = validate(authSchemas.loginData, req.body);
+    const { email, password } = validatedBody;
 
     if (!email || !password) {
       return res.status(400).json("Tous les champs sont obligatoires.");
@@ -91,7 +89,11 @@ const authController = {
       return res.status(400).json("Mauvais couple email/mot de passe.");
     }
 
-    const isMatching = bcrypt.compareSync(password, user.dataValues.password);
+    if (!user.dataValues.is_active) {
+      return res.status(403).json("Ce compte est désactivé.");
+    }
+
+    const isMatching = await bcrypt.compare(password, user.dataValues.password);
 
     if (!isMatching) {
       return res.status(400).json("Mauvais couple email/mot de passe.");

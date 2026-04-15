@@ -4,7 +4,7 @@ function isLoggedIn(req, res, next) {
   if (req.userId && req.userRole) {
     next();
   } else {
-    res.status(401).json({ message: "Vous devez vous connecter" });
+    errorHandler._401(["Vous devez vous connecter"], req, res);
   }
 }
 
@@ -12,7 +12,7 @@ function isEmployee(req, res, next) {
   if (req.userId && (req.userRole === "Employé" || req.userRole === "Admin")) {
     next();
   } else {
-    errorHandler._404();
+    errorHandler._403(["Accès employé ou admin requis"], req, res);
   }
 }
 
@@ -20,7 +20,7 @@ function isAdmin(req, res, next) {
   if (req.userId && req.userRole === "Admin") {
     next();
   } else {
-    errorHandler._404();
+    errorHandler._403(["Accès admin requis"], req, res);
   }
 }
 
