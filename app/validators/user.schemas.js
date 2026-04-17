@@ -18,9 +18,7 @@ const userSchemas = {
     firstname: Joi.string().min(1).max(30).required(),
     birthdate: Joi.date().utc().format(["DD-MM-YYYY"]).required(),
     password: Joi.string().min(8).pattern(passwordRegex).required(),
-    role: Joi.string()
-      .valid(...allowedRoles)
-      .required(),
+    role: Joi.string().valid(...allowedRoles),
     is_active: Joi.boolean(),
   },
 

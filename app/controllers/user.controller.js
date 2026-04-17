@@ -58,9 +58,14 @@ const userController = {
       return res.status(404).json({ error: "Utilisateur introuvable." });
     }
 
-    const forbiddenFields = ["role", "is_active", "arrival_date", "leaving_date"];
+    const forbiddenFields = [
+      "role",
+      "is_active",
+      "arrival_date",
+      "leaving_date",
+    ];
     const triesToUpdateForbiddenFields = forbiddenFields.some(
-      (field) => req.body[field] !== undefined
+      (field) => req.body[field] !== undefined,
     );
 
     if (triesToUpdateForbiddenFields) {
@@ -71,8 +76,14 @@ const userController = {
     }
 
     const updatedUser = {};
-    ["avatar", "email", "lastname", "firstname", "birthdate", "password"].forEach(
-      (field) => {
+    [
+      "avatar",
+      "email",
+      "lastname",
+      "firstname",
+      "birthdate",
+      "password",
+    ].forEach((field) => {
       if (req.body[field] !== undefined) {
         updatedUser[field] = req.body[field];
       }
@@ -90,7 +101,10 @@ const userController = {
 
     if (updatedUser.password) {
       const nbOfSaltRounds = parseInt(process.env.NB_OF_SALT_ROUNDS, 10) || 10;
-      updatedUser.password = await bcrypt.hash(updatedUser.password, nbOfSaltRounds);
+      updatedUser.password = await bcrypt.hash(
+        updatedUser.password,
+        nbOfSaltRounds,
+      );
     }
 
     try {
@@ -104,6 +118,46 @@ const userController = {
       res
         .status(500)
         .json({ error: "Erreur lors de la mise à jour de l'utilisateur." });
+    }
+  },
+
+  createUser: async (req, res) => {
+    const { avatar, email, lastname, firstname, birthdate, password, role } =
+      validate(userSchemas.createUser, req.body);
+
+    if (!email || !lastname || !firstname || !password || !birthdate) {
+      return res
+        .status(400)
+        .json({ error: "Tous les champs sont obligatoires." });
+    }
+
+    const nbOfSaltRounds = parseInt(process.env.NB_OF_SALT_ROUNDS, 10) || 10;
+    const hashedPassword = await bcrypt.hash(password, nbOfSaltRounds);
+
+    const user = await User.findOne({ where: { email } });
+
+    if (user) {
+      return res.status(400).json({ error: "Cet email est déjà utilisé." });
+    }
+
+    try {
+      await User.create({
+        avatar,
+        email,
+        lastname,
+        firstname,
+        birthdate,
+        password: hashedPassword,
+        role: "user",
+        is_active: true,
+      });
+
+      res.status(200).json("Utilisateur créé avec succès.");
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la création de l'utilisateur." });
     }
   },
 
@@ -152,7 +206,7 @@ const userController = {
     const user = await User.findOne({ where: { email } });
 
     if (user) {
-      return res.status(400).json("Cet email est déjà utilisé.");
+      return res.status(400).json({ error: "Cet email est déjà utilisé." });
     }
 
     try {
@@ -170,7 +224,9 @@ const userController = {
       res.status(200).json("Utilisateur créé avec succès.");
     } catch (error) {
       console.error(error);
-      res.status(500).json("Erreur lors de la création de l'utilisateur.");
+      res
+        .status(500)
+        .json({ error: "Erreur lors de la création de l'utilisateur." });
     }
   },
 };

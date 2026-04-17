@@ -12,12 +12,13 @@ router.put(
   "/users/patch",
   jwtMiddleware,
   isLoggedIn,
-  cw(userController.update)
+  cw(userController.update),
 );
+router.post("/user", userController.createUser);
 router.post(
   "/user/delete",
   jwtMiddleware,
   isAdmin,
-  cw(userController.softDelete)
+  cw(userController.softDelete),
 );
 router.post("/user/add", jwtMiddleware, isAdmin, cw(userController.addNewUser));
