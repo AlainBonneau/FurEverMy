@@ -7,3 +7,4 @@ export const router = Router();
 
 router.post("/auth/register", authRateLimiter, cw(authController.register));
 router.post("/auth/login", authRateLimiter, cw(authController.login));
+router.post("/auth/logout", cw(authController.logout));

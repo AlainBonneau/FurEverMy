@@ -11,21 +11,12 @@ const jwtMiddleware = (req, res, next) => {
     );
   }
 
-  const authHeader = req.headers.authorization;
+  const token = req.cookies?.access_token;
 
-  if (!authHeader) {
-    return res.status(401).json({ error: "Authorization header manquant" });
-  }
-
-  if (!authHeader.startsWith("Bearer ")) {
+  if (!token) {
     return res
       .status(401)
-      .json({ error: "Format attendu: Authorization: Bearer <token>" });
-  }
-
-  const token = authHeader.slice(7).trim();
-  if (!token) {
-    return res.status(401).json({ error: "Token manquant" });
+      .json({ error: "Token manquant (cookie HttpOnly attendu)." });
   }
 
   try {

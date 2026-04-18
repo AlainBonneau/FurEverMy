@@ -1,6 +1,7 @@
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { rateLimit } from "express-rate-limit";
 
 import { router as apiRouter } from "./app/routers/router.js";
@@ -41,6 +42,7 @@ app.use(
 // Body parser:
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Body Sanitizer:
 app.use(bodySanitizer);

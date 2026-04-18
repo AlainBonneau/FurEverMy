@@ -1,7 +1,6 @@
 import bcrypt from "bcrypt";
 import { User } from "../models/user.model.js";
 import { Task } from "../models/task.model.js";
-import { createToken } from "../utils/token.util.js";
 import userSchemas from "../validators/user.schemas.js";
 import validate from "../validators/validator.js";
 
@@ -31,17 +30,7 @@ const userController = {
       return res.status(404).json({ error: "Utilisateur inconnu" });
     }
 
-    const userTokenJWT = createToken({
-      avatar: user.dataValues.avatar,
-      email: user.dataValues.email,
-      userId: user.dataValues.id,
-      lastname: user.dataValues.lastname,
-      firstname: user.dataValues.firstname,
-      role: user.dataValues.role,
-      is_active: user.dataValues.is_active,
-    });
-
-    res.json(userTokenJWT);
+    res.json(user);
   },
 
   update: async (req, res) => {

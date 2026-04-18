@@ -6,6 +6,36 @@ import validate from "../validators/validator.js";
 import authSchemas from "../validators/auth.schemas.js";
 import { createToken, createRefreshToken } from "../utils/token.util.js";
 
+const ACCESS_TOKEN_COOKIE_NAME = "access_token";
+const REFRESH_TOKEN_COOKIE_NAME = "refresh_token";
+const ACCESS_TOKEN_MAX_AGE_MS = 60 * 60 * 1000;
+const REFRESH_TOKEN_MAX_AGE_MS = 24 * 60 * 60 * 1000;
+
+const getSameSiteValue = () => {
+  const sameSite = (process.env.COOKIE_SAME_SITE || "none").toLowerCase();
+
+  if (sameSite === "lax" || sameSite === "strict" || sameSite === "none") {
+    return sameSite;
+  }
+
+  return "none";
+};
+
+const getCookieBaseOptions = () => {
+  const cookieOptions = {
+    httpOnly: true,
+    secure: process.env.COOKIE_SECURE !== "false",
+    sameSite: getSameSiteValue(),
+    path: "/",
+  };
+
+  if (process.env.COOKIE_DOMAIN) {
+    cookieOptions.domain = process.env.COOKIE_DOMAIN;
+  }
+
+  return cookieOptions;
+};
+
 const authController = {
   register: async (req, res) => {
     const validatedBody = validate(authSchemas.registerData, req.body);
@@ -113,9 +143,31 @@ const authController = {
       role: user.dataValues.role,
     });
 
-    console.log("Succes du login");
+    const cookieBaseOptions = getCookieBaseOptions();
 
-    res.status(200).json({ tokenJWT, refreshTokenJWT });
+    res.cookie(ACCESS_TOKEN_COOKIE_NAME, tokenJWT, {
+      ...cookieBaseOptions,
+      maxAge: ACCESS_TOKEN_MAX_AGE_MS,
+    });
+
+    res.cookie(REFRESH_TOKEN_COOKIE_NAME, refreshTokenJWT, {
+      ...cookieBaseOptions,
+      maxAge: REFRESH_TOKEN_MAX_AGE_MS,
+    });
+
+    res.status(200).json({
+      message: "Authentification réussie.",
+      user: userData,
+    });
+  },
+
+  logout: async (req, res) => {
+    const cookieBaseOptions = getCookieBaseOptions();
+
+    res.clearCookie(ACCESS_TOKEN_COOKIE_NAME, cookieBaseOptions);
+    res.clearCookie(REFRESH_TOKEN_COOKIE_NAME, cookieBaseOptions);
+
+    res.status(200).json({ message: "Déconnexion réussie." });
   },
 };
 
